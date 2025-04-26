@@ -1,0 +1,40 @@
+250427
+# create a conda enviroment for this project and activate
+conda create --prefix ~/Programming/AI/TransLai/TransLaiPyEnv python=3.13
+conda activate ~/Programming/AI/TransLai/TransLaiPyEnv
+
+# clone whisper.cpp project and enter the whisper.cpp folder
+git clone https://github.com/ggml-org/whisper.cpp.git
+cd whisper.cpp
+
+# download base (multiligual model)
+sh ./models/download-ggml-model.sh base
+
+# install cmake
+sudo apt-get update
+sudo apt install cmake
+# install c++ compiler
+sudo apt update
+sudo apt install build-essential
+
+# build cpp project
+cmake -B build
+cmake --build build --config Release
+
+# transcribe the fjk.mp3 file using ggml-base.bin model took 23 s
+# without -m models/ggml-base.bin the default model is ggml-base.en.bin
+./build/bin/whisper-cli -m models/ggml-base.bin -f samples/jfk.mp3 
+
+# output the transcribed speech to text file and select the language to be english
+./build/bin/whisper-cli -m models/ggml-base.bin -f samples/jfk.mp3 -otxt -l en
+
+# install ffmpeg to record sound
+sudo apt update
+sudo apt install ffmpeg
+
+# record voice without duration setting (press 'q' when stop)
+ffmpeg -f alsa -i default ./samples/translai.wav
+
+# convert to .mp3
+ffmpeg -i ./samples/translai.wav ./samples/translai.mp3
+
