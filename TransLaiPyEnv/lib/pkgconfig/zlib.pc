@@ -1,0 +1,13 @@
+prefix=/home/giang/Programming/AI/TransLai/TransLaiPyEnv
+exec_prefix=/home/giang/Programming/AI/TransLai/TransLaiPyEnv
+libdir=/home/giang/Programming/AI/TransLai/TransLaiPyEnv/lib
+sharedlibdir=/home/giang/Programming/AI/TransLai/TransLaiPyEnv/lib
+includedir=/home/giang/Programming/AI/TransLai/TransLaiPyEnv/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.2.13
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}
