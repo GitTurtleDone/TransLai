@@ -1,0 +1,26 @@
+250428
+
+# playing with processors and threads, 
+
+8 t 1 p -> 20 s (shortest)
+main: processing 'samples/EmDiHocSom_vi.wav' (132798 samples, 8.3 sec), 8 threads, 1 processors, 5 beams + best of 5, lang = vi, task = transcribe, timestamps = 1 ...
+
+
+[00:00:00.000 --> 00:00:08.000]   Sáng nay em đi học sớm qua đồng lũa xanh xanh mẹ em nhân nhân tây kỳ không chân dây mà vẫn thẳng hàng.
+
+output_txt: saving output to 'samples/EmDiHocSom_vi.wav.txt'
+
+250428
+
+# playing with processors and threads, 
+
+./build/bin/whisper-cli -m models/ggml-base.bin -8 p-1 -f samples/EmDiHocSom_vi.wav -otxt -l vi
+8 t 1 p -> 20 s
+main: processing 'samples/EmDiHocSom_vi.wav' (132798 samples, 8.3 sec), 8 threads, 1 processors, 5 beams + best of 5, lang = vi, task = transcribe, timestamps = 1 ...
+
+
+[00:00:00.000 --> 00:00:08.000]   Sáng nay em đi học sớm qua đồng lũa xanh xanh mẹ em nhân nhân tây kỳ không chân dây mà vẫn thẳng hàng.
+
+output_txt: saving output to 'samples/EmDiHocSom_vi.wav.txt'
+
+

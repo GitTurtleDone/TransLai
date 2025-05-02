@@ -1,0 +1,44 @@
+🤔 So, Which Approach is Better for You?
+✅ Recommended: Modular Approach
+For a portable edge device, I highly recommend starting with the modular pipeline:
+
+
+Step	Example Tool
+ASR	Whisper Tiny / Medium (open-source, fast, multilingual)
+MT	VinAI Translate (vi-en) or MarianMT
+TTS	Coqui TTS (lightweight, supports Vietnamese/English) or Festival
+
+
+
+🧠 What to Use Instead (For Offline Use)
+If you want everything to run locally on your Raspberry Pi or edge device, here are solid offline alternatives:
+
+🔈 Offline Speech-to-Text (ASR)
+Whisper (OpenAI) – Best accuracy, open-source, runs offline (use the tiny/small models for Pi)
+
+Tools: whisper.cpp for fast CPU inference
+
+Vosk – Lightweight ASR, supports many languages (including Vietnamese and English)
+
+Raspberry Pi compatible
+
+Lower resource usage than Whisper
+
+🌍 Offline Machine Translation
+MarianMT (by Hugging Face) – Pretrained models for Vietnamese ↔ English
+
+M2M100 (Meta AI) – Multilingual model, can run on-device with quantization
+
+🗣️ Offline Text-to-Speech (TTS)
+Coqui TTS – High-quality, open-source, supports Vietnamese (community voices available)
+
+eSpeak NG / Festival – Lightweight, old-school TTS, works on Pi but robotic voice
+
+🧠 Summary for Your Use Case
+Feature	Coqui TTS
+Works offline	✅ Yes
+Supports Vietnamese	✅ Yes (with models/datasets)
+High-quality output	✅ Yes
+Can run on low-power device	⚠️ With optimization
+Open-source and customizable	✅ Yes
+Easy to integrate into pipeline	✅ Yes (Python API)
