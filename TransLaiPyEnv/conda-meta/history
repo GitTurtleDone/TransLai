@@ -24,3 +24,27 @@
 +defaults/noarch::pip-25.1-pyhc872135_1
 +defaults/noarch::tzdata-2025b-h04d1e81_0
 # update specs: ['python=3.11']
+==> 2025-05-04 14:58:13 <==
+# cmd: /home/giang/miniconda3/bin/conda install python=3.13
+# conda version: 23.1.0
+-defaults/linux-64::python-3.11.11-he870216_0
+-defaults/linux-64::setuptools-78.1.1-py311h06a4308_0
+-defaults/linux-64::wheel-0.45.1-py311h06a4308_0
+-defaults/noarch::pip-25.1-pyhc872135_1
++defaults/linux-64::expat-2.7.1-h6a678d5_0
++defaults/linux-64::libmpdec-4.0.0-h5eee18b_0
++defaults/linux-64::python-3.13.2-hf623796_100_cp313
++defaults/linux-64::python_abi-3.13-0_cp313
++defaults/noarch::pip-25.1-pyh0d26453_1
+# update specs: ['python=3.13']
+==> 2025-05-07 16:39:42 <==
+# cmd: /home/giang/miniconda3/bin/conda install python=3.10
+# conda version: 23.1.0
+-defaults/linux-64::python-3.13.2-hf623796_100_cp313
+-defaults/linux-64::python_abi-3.13-0_cp313
+-defaults/noarch::pip-25.1-pyh0d26453_1
++defaults/linux-64::python-3.10.16-he870216_1
++defaults/linux-64::setuptools-78.1.1-py310h06a4308_0
++defaults/linux-64::wheel-0.45.1-py310h06a4308_0
++defaults/noarch::pip-25.1-pyhc872135_2
+# update specs: ['python=3.10']
