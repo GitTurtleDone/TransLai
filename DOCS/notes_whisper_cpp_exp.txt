@@ -1,0 +1,49 @@
+250428
+
+# playing with processors and threads, 
+
+8 t 1 p -> 20 s (shortest)
+main: processing 'samples/EmDiHocSom_vi.wav' (132798 samples, 8.3 sec), 8 threads, 1 processors, 5 beams + best of 5, lang = vi, task = transcribe, timestamps = 1 ...
+
+
+[00:00:00.000 --> 00:00:08.000]   Sáng nay em đi học sớm qua đồng lũa xanh xanh mẹ em nhân nhân tây kỳ không chân dây mà vẫn thẳng hàng.
+
+output_txt: saving output to 'samples/EmDiHocSom_vi.wav.txt'
+
+250428
+
+# playing with processors and threads, 
+
+./build/bin/whisper-cli -m models/ggml-base.bin t-8 p-1 -f samples/EmDiHocSom_vi.wav -otxt -l vi
+8 t 1 p -> 20 s
+main: processing 'samples/EmDiHocSom_vi.wav' (132798 samples, 8.3 sec), 8 threads, 1 processors, 5 beams + best of 5, lang = vi, task = transcribe, timestamps = 1 ...
+
+
+[00:00:00.000 --> 00:00:08.000]   Sáng nay em đi học sớm qua đồng lũa xanh xanh mẹ em nhân nhân tây kỳ không chân dây mà vẫn thẳng hàng.
+
+output_txt: saving output to 'samples/EmDiHocSom_vi.wav.txt'
+
+
+250508
+
+# using python 3.10 to test whisper.cpp
+
+./build/bin/whisper-cli -m models/ggml-tiny.bin -f samples/EmDiHocSom_vi.wav -otxt -l vi
+2.10 s 4 threads, 1 processors,
+Sáng nay em đi học xếm qua đồng lối xin xanh mẹ em nhìn kênh tay kỳ không chẳng dây mà bình thẳng hàng.
+
+./build/bin/whisper-cli -m models/ggml-tiny.bin t-8 p-1 -f samples/EmDiHocSom_vi.wav -otxt -l vi
+1.89 s 8 threads, 1 processors,
+4 threads, 1 processors Sáng nay em đi học xếm qua đồng lối xin xanh mẹ em nhìn kênh tay kỳ không chẳng dây mà bình thẳng hàng.
+
+./build/bin/whisper-cli -m models/ggml-base.bin t-8 p-1 -f samples/EmDiHocSom_vi.wav -otxt -l vi
+3.26 s 8 threads, 1 processors,
+Sáng nay em đi học sớm qua đồng lũa xanh xanh mẹ em nhân nhân tây kỳ không chân dây mà vẫn thẳng hàng.
+
+./build/bin/whisper-cli -m models/ggml-base.en.bin t-8 p-1 -f samples/RogerPenrose.wav -otxt -l en
+3.05 s 8 threads, 1 processors,
+Roger Penrose is a theoretical physicist who showed that the formation of black house is uncertainty if the general relativity of angstyne is correct.
+
+./build/bin/whisper-cli -m models/ggml-tiny.en.bin t-8 p-1 -f samples/RogerPenrose.wav -otxt -l en
+2.18 s 8 threads, 1 processors,
+Roger Penrose is a theoretical physicist who showed that the formation of black holes is certainly if the general relativity of angling is correct.

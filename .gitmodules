@@ -1,3 +1,10 @@
 [submodule "whisper.cpp"]
 	path = whisper.cpp
 	url = https://github.com/ggml-org/whisper.cpp.git
+[submodule "light-speed"]
+	path = light-speed
+	url = https://github.com/NTT123/light-speed.git
+[submodule "TTS"]
+	path = TTS
+	url = https://github.com/thinhlpg/TTS.git
+	branch = add-vietnamese-xtts

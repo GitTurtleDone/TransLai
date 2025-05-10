@@ -1,5 +1,4 @@
-#!/home/giang/Programming/AI/TransLai/TransLaiPyEnv/bin/python
-
+#!/home/giang/Programming/AI/TransLai/TransLaiPyEnv/bin/python3.10
 # -*- coding: utf-8 -*-
 import re
 import sys
