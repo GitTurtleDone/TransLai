@@ -208,3 +208,20 @@ pip install deepfilternet==0.5.6
 
 run the inference cell in the .ipynb
 seems to work.
+
+
+The command:
+
+import os
+from huggingface_hub import snapshot_download
+
+
+os.system("python -m unidic download")
+print(" > Tải mô hình...")
+snapshot_download(repo_id="thinhlpg/viXTTS",
+                  repo_type="model",
+                  local_dir="model")
+
+downloaded the trained model into the folder viXTTS_demo/model/
+
+The vi_sample.wav sample voice file was downloaded there too.
