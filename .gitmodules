@@ -6,4 +6,5 @@
 	url = https://github.com/NTT123/light-speed.git
 [submodule "TTS"]
 	path = TTS
-	url = https://github.com/coqui-ai/TTS
+	url = https://github.com/thinhlpg/TTS.git
+	branch = add-vietnamese-xtts

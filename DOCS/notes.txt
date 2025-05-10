@@ -184,3 +184,27 @@ return torch.load(f, map_location=map_location, weights_only= False, **kwargs)
 
 
 
+250510
+
+Install vixtts from the "Non la" group:
+
+Follow almost all the steps in viXTTS_Demo.ipynb file:
+rm -rf TTS/
+
+
+git submodule deinit -f TTS
+git rm -f TTS
+rm -rf .git/modules/TTS
+
+
+git submodule add -b add-vietnamese-xtts https://github.com/thinhlpg/TTS.git
+
+pip install -q vinorm==2.0.7
+pip install -q cutlet
+pip install -q unidic==1.1.0
+pip install -q underthesea
+pip install -q gradio==4.35
+pip install deepfilternet==0.5.6
+
+run the inference cell in the .ipynb
+seems to work.
