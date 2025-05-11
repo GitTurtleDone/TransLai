@@ -125,7 +125,16 @@ def load_model(xtts_checkpoint, xtts_config, xtts_vocab):
     return XTTS_MODEL
 
 
-def get_file_name(text, max_char=50):
+def get_file_name():
+
+    global text_file_path
+    
+    filename = os.path.splitext(os.path.basename(text_file_path))[0]
+    current_datetime = datetime.now().strftime("%y%m%d%H%M%S")
+    filename = f"{current_datetime}_{filename}"
+    return filename
+
+def get_file_name1(text, max_char=50):
     filename = text[:max_char]
     filename = filename.lower()
     filename = filename.replace(" ", "_")
@@ -242,7 +251,7 @@ def run_tts(XTTS_MODEL, lang, tts_text, speaker_audio_file,
         wav_chunk["wav"] = torch.tensor(wav_chunk["wav"][:keep_len])
 
         if output_chunks:
-            out_path = os.path.join(output_dir, f"{get_file_name(text)}.wav")
+            out_path = os.path.join(output_dir, f"{get_file_name()}.wav")
             torchaudio.save(out_path, wav_chunk["wav"].unsqueeze(0), 24000)
             if verbose:
                 print(f"Saved chunk to {out_path}")
@@ -250,7 +259,7 @@ def run_tts(XTTS_MODEL, lang, tts_text, speaker_audio_file,
         wav_chunks.append(wav_chunk["wav"])
 
     out_wav = torch.cat(wav_chunks, dim=0).unsqueeze(0)
-    out_path = os.path.join(output_dir, f"{get_file_name(tts_text)}.wav")
+    out_path = os.path.join(output_dir, f"{get_file_name()}.wav")
     torchaudio.save(out_path, out_wav, 24000)
 
     if verbose:
