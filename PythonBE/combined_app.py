@@ -6,8 +6,6 @@ import subprocess
 from transformers import MarianMTModel, MarianTokenizer
 
 # for running vixtts
-
-
 from pprint import pprint
 import torch
 import torchaudio
@@ -21,9 +19,8 @@ from IPython.display import clear_output
 ipt_lang = 'en'
 opt_lang = 'vi'
 process_folder = 'ProcessFiles' # the folder where processing files are stored
-
+#-------------------------------------
 # clean process folder
-
 def clean_process_folder():
 
     global process_folder
@@ -32,7 +29,9 @@ def clean_process_folder():
         file_path = os.path.join(process_folder, filename)
         if os.path.isfile(file_path):
             os.remove(file_path)
+#--------------------------------------
 
+#--------------------------------------
 # set up to record an audio
 ipt_audio_file_path = os.path.join(process_folder, "ipt.wav")
 audio_record_command = [
@@ -47,9 +46,10 @@ def record_audio():
     subprocess.run(audio_record_command)
 #--------------------------------------
 
+
+#--------------------------------------
 # set up to transcribe the recorded audio
 whisper_ipt_audio_file_path = os.path.join("..", process_folder, "ipt.wav") # ".." is for signing out of the whisper.cpp folder
-
 # Define the command to be run from the terminal
 whisper_command = [
     "./build/bin/whisper-cli",
@@ -75,6 +75,7 @@ def transcribe_input_audio():
     print("STDERR:", result.stderr)
 #--------------------------------------
 
+#--------------------------------------
 # set up to translate the input text using MarianMT
 marianMT_model_name = 'Helsinki-NLP/opus-mt-' + ipt_lang + '-' + opt_lang
 tokenizer = MarianTokenizer.from_pretrained(marianMT_model_name)

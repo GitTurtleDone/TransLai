@@ -1,2 +1,2 @@
- Good morning, today's Tuesday, the 13th of May 2025 students in our department is working
- in the labs.
+ This morning I have been done so much, I just try to write a react friendend with the
+ typed script.

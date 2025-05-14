@@ -225,3 +225,25 @@ snapshot_download(repo_id="thinhlpg/viXTTS",
 downloaded the trained model into the folder viXTTS_demo/model/
 
 The vi_sample.wav sample voice file was downloaded there too.
+
+250514
+
+# installing fastapi and uvicorn for writing an user inferface
+pip install fastapi uvicorn
+
+# installing react-typescript project:
+ npm create vite@latest ReactTSFE --template react-ts
+Need to install the following packages:
+create-vite@6.5.0
+Ok to proceed? (y) y
+follow the prompts enter -> select .. typescript -> select framework react
+
+cd ReactTSFE
+npm install
+npm run dev
+
+250515
+
+# installing lucid-react for waveform icons
+npm install lucide-react # after cd into ReactTSFE
+
