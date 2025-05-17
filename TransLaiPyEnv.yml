@@ -1,0 +1,7 @@
+name: /home/giang/Programming/AI/TransLai/TransLaiPyEnv
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - ipykernel
+prefix: /home/giang/Programming/AI/TransLai/TransLaiPyEnv
