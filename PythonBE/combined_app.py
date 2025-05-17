@@ -4,7 +4,6 @@ import os
 import subprocess
 # for running MarianMT
 from transformers import MarianMTModel, MarianTokenizer
-
 # for running vixtts
 from pprint import pprint
 import torch
@@ -13,7 +12,10 @@ from tqdm import tqdm
 from underthesea import sent_tokenize
 # from unidecode import unidecode
 from IPython.display import clear_output
-# from IPython.display import Audio
+from fastapi import FastAPI, Request
+from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware 
+
 
 # global variable
 ipt_lang = 'en'
@@ -34,16 +36,15 @@ def clean_process_folder():
 #--------------------------------------
 # set up to record an audio
 ipt_audio_file_path = os.path.join(process_folder, "ipt.wav")
-audio_record_command = [
+
+def record_audio(opt_audio_path):
+    global audio_record_command
+    subprocess.run([
     "ffmpeg",
     "-f", "alsa",
     "-i", "default",
-    ipt_audio_file_path
-]
-
-def record_audio():
-    global audio_record_command
-    subprocess.run(audio_record_command)
+    opt_audio_path
+    ], check=True)
 #--------------------------------------
 
 
@@ -312,11 +313,42 @@ def text_to_speech():
 
     subprocess.run(["ffplay", "-nodisp", "-autoexit", audio_file])
 #-----------------------------------
-clean_process_folder()
-record_audio()
-transcribe_input_audio()
-translate_text()
-text_to_speech()
+
+app = FastAPI()
+class RecordTemplate(BaseModel):
+    lang_code: str
+allowed_origins = [
+    "http://127.0.0.1:5173",
+    "http://localhost:3000",  # React dev server
+    "http://127.0.0.1:3000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = allowed_origins,
+    allow_credentials = True,
+    allow_methods = ["*"],
+    allow_headers = ["*"],
+)
+
+
+
+
+@app.post("/record_template")
+async def record_template(req: RecordTemplate):
+    try:
+        opt_audio_path = f'PythonBE/sample_voice_{req.lang_code}.wav'
+        if os.path.exists(opt_audio_path):
+            os.remove(opt_audio_path)
+        record_audio(opt_audio_path)
+        return {"message":f"Template voice saved at {opt_audio_path}"}
+    except subprocess.CalledProcessError:
+        return {"message": "Recording failed"}, 500
+# clean_process_folder()
+# record_audio()
+# transcribe_input_audio()
+# translate_text()
+# text_to_speech()
 # # @markdown Chọn ngôn ngữ:
 # language = "Tiếng Việt" # @param ["Tiếng Việt", "Tiếng Anh","Tiếng Tây Ban Nha", "Tiếng Pháp","Tiếng Đức","Tiếng Ý", "Tiếng Bồ Đào Nha", "Tiếng Ba Lan", "Tiếng Thổ Nhĩ Kỳ", "Tiếng Nga", "Tiếng Hà Lan", "Tiếng Séc", "Tiếng Ả Rập", "Tiếng Trung (giản thể)", "Tiếng Nhật", "Tiếng Hungary", "Tiếng Hàn", "Tiếng Hindi"]
 # @markdown Văn bản để đọc. Độ dài tối thiểu mỗi câu nên từ 10 từ để đặt kết quả tốt nhất.

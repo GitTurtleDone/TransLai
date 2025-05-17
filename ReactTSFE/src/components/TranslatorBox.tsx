@@ -24,7 +24,7 @@ export default function TranslatorBox({
         flex: 1,
         minWidth: "300px",
         maxWidth: "600px",
-        boxSizing: "border-box",
+        // boxSizing: "border-box",
       }}
     >
       <label>{label}</label>

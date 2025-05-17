@@ -1,7 +1,8 @@
 import { useState } from "react";
 import TranslatorBox from "./components/TranslatorBox";
 import languages from "./data/languages.json";
-import { FileX } from "lucide-react";
+import RecordTemplate from "./components/RecordTemplate";
+// import { FileX } from "lucide-react";
 
 // const
 // // languages = [
@@ -24,11 +25,13 @@ function App() {
         width: "100vw",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "left",
         boxSizing: "border-box",
+        padding: "2rem",
       }}
     >
       <h1>Portable Translator</h1>
+      <RecordTemplate />
       <div
         style={{
           display: "flex",
@@ -36,7 +39,9 @@ function App() {
           gap: "2rem",
           flexWrap: "wrap",
           justifyContent: "center",
-          border: "1px solid gray", // visual aid
+          // alignItems: "left",
+
+          // border: "1px solid gray", // visual aid
         }}
       >
         <TranslatorBox

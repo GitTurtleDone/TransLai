@@ -247,3 +247,9 @@ npm run dev
 # installing lucid-react for waveform icons
 npm install lucide-react # after cd into ReactTSFE
 
+
+250517
+# install axios in the react typescript project
+cd ReactTSFE
+npm install axios
+npm install --save-dev @types/axios  # @types/axios provides better Type definition and better for type checking and autocompletion --save-dev needed only in development not in production.
