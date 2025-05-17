@@ -36,9 +36,10 @@ def clean_process_folder():
 #--------------------------------------
 # set up to record an audio
 ipt_audio_file_path = os.path.join(process_folder, "ipt.wav")
+opt_audio_file_path = os.path.join(process_folder, "opt.wav")
+
 
 def record_audio(opt_audio_path):
-    global audio_record_command
     subprocess.run([
     "ffmpeg",
     "-f", "alsa",
@@ -67,13 +68,13 @@ def transcribe_input_audio():
     
     global whisper_command
     global whisper_working_dir
-
+    # print('went in transcribe_input_audio')
     # Run the command
     result = subprocess.run(whisper_command, cwd=whisper_working_dir, capture_output=True, text=True)
-
+    
     # Print output or error
-    print("STDOUT:", result.stdout)
-    print("STDERR:", result.stderr)
+    # print("STDOUT:", result.stdout)
+    # print("STDERR:", result.stderr)
 #--------------------------------------
 
 #--------------------------------------
@@ -314,9 +315,14 @@ def text_to_speech():
     subprocess.run(["ffplay", "-nodisp", "-autoexit", audio_file])
 #-----------------------------------
 
+
+
 app = FastAPI()
 class RecordTemplate(BaseModel):
     lang_code: str
+class Translate(BaseModel):
+    ipt_lang_code: str
+    opt_lang_code: str
 allowed_origins = [
     "http://127.0.0.1:5173",
     "http://localhost:3000",  # React dev server
@@ -327,14 +333,36 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins = allowed_origins,
     allow_credentials = True,
-    allow_methods = ["*"],
-    allow_headers = ["*"],
+    allow_methods = ['*'],
+    allow_headers = ['*'],
 )
 
+def update_languages(ipt, opt):
+    global whisper_command
+    global reference_audio
+    global ipt_lang
+    global opt_lang
+    global marianMT_model_name
+    global tokenizer
+    global marianMT_model
+    if (ipt_lang != ipt or opt_lang != opt):
+        # reset whisper_command
+        ipt_lang = ipt
+        opt_lang = opt
+        whisper_command[7] = ipt
+        # reset MarianMT model
+        marianMT_model_name = 'Helsinki-NLP/opus-mt-' + ipt_lang + '-' + opt_lang
+        tokenizer = MarianTokenizer.from_pretrained(marianMT_model_name)
+        marianMT_model = MarianMTModel.from_pretrained(marianMT_model_name)
+
+        # reset template voice
+        reference_audio = "PythonBE/sample_voice_" + opt_lang+ ".wav" 
+        
 
 
 
-@app.post("/record_template")
+
+@app.post('/record_template')
 async def record_template(req: RecordTemplate):
     try:
         opt_audio_path = f'PythonBE/sample_voice_{req.lang_code}.wav'
@@ -344,11 +372,25 @@ async def record_template(req: RecordTemplate):
         return {"message":f"Template voice saved at {opt_audio_path}"}
     except subprocess.CalledProcessError:
         return {"message": "Recording failed"}, 500
-# clean_process_folder()
-# record_audio()
-# transcribe_input_audio()
-# translate_text()
-# text_to_speech()
+
+@app.post('/translate')
+async def translate(req: Translate):
+    # global ipt_lang
+    # global opt_lang
+    # global opt_audio_file_path
+    global ipt_audio_file_path
+    update_languages(req.ipt_lang_code, req.opt_lang_code)
+    # print(whisper_command)
+    try: 
+        clean_process_folder()
+        record_audio(ipt_audio_file_path)
+        transcribe_input_audio()
+        translate_text()
+        text_to_speech()
+        return {'message': 'Translated'}
+    except subprocess.CalledProcessError:
+        return {'message': 'Translating failed'}, 500
+""""""
 # # @markdown Chọn ngôn ngữ:
 # language = "Tiếng Việt" # @param ["Tiếng Việt", "Tiếng Anh","Tiếng Tây Ban Nha", "Tiếng Pháp","Tiếng Đức","Tiếng Ý", "Tiếng Bồ Đào Nha", "Tiếng Ba Lan", "Tiếng Thổ Nhĩ Kỳ", "Tiếng Nga", "Tiếng Hà Lan", "Tiếng Séc", "Tiếng Ả Rập", "Tiếng Trung (giản thể)", "Tiếng Nhật", "Tiếng Hungary", "Tiếng Hàn", "Tiếng Hindi"]
 # @markdown Văn bản để đọc. Độ dài tối thiểu mỗi câu nên từ 10 từ để đặt kết quả tốt nhất.

@@ -1,2 +1,1 @@
- This morning I have been done so much, I just try to write a react friendend with the
- typed script.
+ Today I was working very effectively, I managed to ride an API for the translator.

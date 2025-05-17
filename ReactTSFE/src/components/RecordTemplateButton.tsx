@@ -4,14 +4,14 @@ import axios from "axios";
 import languages from "../data/languages.json";
 import styles from "./FncButtons.module.css";
 
-const RecordTemplate: React.FC = () => {
+const RecordTemplateButton: React.FC = () => {
   const [lang, setLang] = useState("en");
   const [status, setStatus] = useState("");
   const [running, setRunning] = useState(false);
   const record = async () => {
     try {
       setRunning(true);
-      setStatus("Recording ... Wait about 10 s");
+      setStatus("Recording ... Wait about 3 s after that speak clearly");
       const response = await axios.post(
         "http://localhost:8000/record_template",
         {
@@ -19,7 +19,7 @@ const RecordTemplate: React.FC = () => {
         },
         { headers: { "Content-Type": "application/json" } }
       );
-      setStatus(response.data.message || "Record compleated");
+      setStatus(response.data.message || "Record completed");
     } catch (err) {
       console.error(err);
       setStatus("Failed to record");
@@ -50,4 +50,4 @@ const RecordTemplate: React.FC = () => {
   );
 };
 
-export default RecordTemplate;
+export default RecordTemplateButton;
