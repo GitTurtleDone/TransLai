@@ -1,4 +1,25 @@
 git clone git@github.com:GitTurtleDone/TransLai.git
 cd AI/TransLai
 git checkout -b combined-app remotes/origin/combined-app
+update conda
+conda create --prefix ~/Programming/AI/TransLai/TransLaiPyEnv python=3.10.16 ipykernel
+conda activate ~/Programming/AI/TransLai/TransLaiPyEnv
+# check that python and pip are correct
+which python
+-> ~/Programming/AI/TransLai/TransLaiPyEnv/bin/python
+which pip
+-> ~/Programming/AI/TransLai/TransLaiPyEnv/bin/pip
+python --version
+-> Python 3.10.16
+pip --version
+-> pip 25.1.1
+
+[submodule "whisper.cpp"]
+	path = whisper.cpp
+	url = https://github.com/ggml-org/whisper.cpp.git
+[submodule "TTS"]
+	path = TTS
+	url = https://github.com/thinhlpg/TTS.git
+	branch = add-vietnamese-xtts
+
 

@@ -323,3 +323,5 @@ pip install fastapi uvicorn
 
 pip install torchaudio==2.3.0 to match existing torch=2.3.0 
 pip install TTS
+
+# remove wrong pip rm ~/.local/bin/pip
