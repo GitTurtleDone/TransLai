@@ -253,3 +253,73 @@ npm install lucide-react # after cd into ReactTSFE
 cd ReactTSFE
 npm install axios
 npm install --save-dev @types/axios  # @types/axios provides better Type definition and better for type checking and autocompletion --save-dev needed only in development not in production.
+
+
+250518 
+# pull the project from git remote to local office desktop computer
+cd AI/TransLai
+git pull # pull the main branch
+git checkout -b combined-app remotes/origin/combined-app
+git pull # pull the feature branch
+cd ReactTSFE
+npm install
+nmp run dev
+
+
+# bugs with TransLaiPyEnv nothing chatGPT recommended work just delete the environment and re-install TransLaiPyEnv
+conda install conda=25.3.1 # update conda
+conda create --prefix ~/Programming/AI/TransLai/TransLaiPyEnv python=3.10.16 ipykernel
+conda activate ~/Programming/AI/TransLai/TransLaiPyEnv
+
+the script
+sh ./models/download-ggml-model.sh base didn't work go directly to https://huggingface.co/ggerganov/whisper.cpp/tree/main to download
+ggml-tiny.bin, ggml-tiny.bin.en, ggml-base.bin, ggml-base.bin.en in the whisper.cpp/models folder
+
+sudo apt --fix-broken install
+# install cmake
+sudo apt-get update
+sudo apt install cmake # has a problem fixed with sudo apt --fix-broken install
+# install c++ compiler
+sudo apt update
+sudo apt install build-essential
+
+# build cpp project
+cmake -B build
+cmake --build build --config Release
+
+# install ffmpeg to record sound
+sudo apt update
+sudo apt install ffmpeg
+
+# install MarianMT
+
+pip install transformers torch
+pip install sentencepiece
+pip install sacremoses #(optional for better translation)
+
+# install thinhlpg/TTS.git
+cd ../ #back to TransLai
+git submodule deinit -f TTS
+git rm -f TTS
+rm -rf .git/modules/TTS
+git submodule add -b add-vietnamese-xtts https://github.com/thinhlpg/TTS.git
+pip install -q vinorm==2.0.7
+pip install -q cutlet
+pip install -q unidic==1.1.0
+pip install -q underthesea
+pip install -q gradio==4.35
+pip install deepfilternet==0.5.6 # this doesn't work
+
+git submodule add https://github.com/thinhlpg/vixtts-demo.git
+# not fully successful but vixtts-demo folder is created
+went to https://huggingface.co/capleaf/viXTTS/tree/main and download:
+model.pth, config.json, and vocab.json and saved them into manually-created "model" folder inside vixtts-demo folder
+under pwd TransLai/ run 'python -m unidic download'
+which was saved in ~/Programming/AI/TransLai/TransLaiPyEnv/lib/python3.10/site-packages/unidic/dicdir
+
+
+# installing fastapi and uvicorn for writing an user inferface
+pip install fastapi uvicorn
+
+pip install torchaudio==2.3.0 to match existing torch=2.3.0 
+pip install TTS
