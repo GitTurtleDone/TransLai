@@ -76,3 +76,11 @@ pip install torchaudio==2.7.0
 for the packages installed by the wrong pip
 
 
+When going back to laptop computer it didn't work because laptop ran ubuntu 20.04 why desktop runs 22.04.5
+fixed by upgrading wsl2 ubuntu with 
+sudo apt update
+sudo apt upgrade
+sudo do-release-upgrade
+
+
+
