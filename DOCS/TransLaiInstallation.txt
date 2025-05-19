@@ -58,3 +58,7 @@ pip install -e ./TTS
 
 pip uninstall tensorflow # tensorflow was installed by wrong pip so it was removed after that from transformers import MarianMTModel, MarianTokenizer works
 
+add vixtts-demo to .gitignores
+
+Manually copy model.pth vocab.json and config.json in vixtts-deom/model from the laptop to the TransLai/vixtts-demo/model of the desktop
+
