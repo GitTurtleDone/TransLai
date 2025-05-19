@@ -170,10 +170,6 @@ verbose = False # @param {type:"boolean"}
 # @markdown Lưu từng câu thành file riêng lẻ.
 output_chunks = False # @param {type:"boolean"}
 
-
-
-
-
 def calculate_keep_len(text, lang):
     if lang in ["ja", "zh-cn"]:
         return -1
