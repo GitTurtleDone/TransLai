@@ -62,3 +62,17 @@ add vixtts-demo to .gitignores
 
 Manually copy model.pth vocab.json and config.json in vixtts-deom/model from the laptop to the TransLai/vixtts-demo/model of the desktop
 
+
+Maybe also need
+pip install -q vinorm==2.0.7
+pip install -q cutlet
+pip install -q unidic==1.1.0
+pip install -q underthesea
+pip install -q gradio==4.35
+pip install deepfilternet==0.5.6 # this doesn't work
+
+pip install fastapi uvicorn
+pip install torchaudio==2.7.0
+for the packages installed by the wrong pip
+
+
