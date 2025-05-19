@@ -39,7 +39,9 @@ function App() {
           width: "80%",
           gap: "2rem",
           flexWrap: "wrap",
-          justifyContent: "center",
+          justifyContent: "left",
+          marginBottom: "2rem",
+          marginTop: "1rem",
           // alignItems: "left",
 
           // border: "1px solid gray", // visual aid
@@ -61,8 +63,8 @@ function App() {
           setText={setOutputText}
           languages={languages}
         />
-        <TranslateButton ipt_lang_code={inputLang} opt_lang_code={outputLang} />
       </div>
+      <TranslateButton ipt_lang_code={inputLang} opt_lang_code={outputLang} />
     </div>
   );
 }
