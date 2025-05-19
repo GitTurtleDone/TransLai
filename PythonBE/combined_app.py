@@ -42,7 +42,7 @@ opt_audio_file_path = os.path.join(process_folder, "opt.wav")
 def record_audio(opt_audio_path):
     subprocess.run([
     "ffmpeg",
-    "-f", "alsa",
+    "-f", "pulse",
     "-i", "default",
     opt_audio_path
     ], check=True)
