@@ -2,7 +2,9 @@ import { useState } from "react";
 import TranslatorBox from "./components/TranslatorBox";
 import languages from "./data/languages.json";
 import RecordTemplateButton from "./components/RecordTemplateButton";
-import TranslateButton from "./components/TranslateButton";
+import TranslateButton from "./components/RecordTranslationButton";
+import StopNTranslateButton from "./components/StopNTranslateButton";
+import StopRecordingTemplateButton from "./components/StopRecordingTemplateButton";
 // import { FileX } from "lucide-react";
 
 // const
@@ -33,6 +35,7 @@ function App() {
     >
       <h1>Portable Translator</h1>
       <RecordTemplateButton />
+      <StopRecordingTemplateButton />
       <div
         style={{
           display: "flex",
@@ -65,6 +68,7 @@ function App() {
         />
       </div>
       <TranslateButton ipt_lang_code={inputLang} opt_lang_code={outputLang} />
+      <StopNTranslateButton/>
     </div>
   );
 }

@@ -83,4 +83,44 @@ sudo apt upgrade
 sudo do-release-upgrade
 
 
+# cd ~/Prorgamming
+cd ~/Programming/AI/TransLai
+code .
+conda activate ~/Programming/AI/TransLai/TransLaiPyEnv
+
+nano ~/.bash_profile
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# install pulse audio
+sudo apt update
+sudo apt install pulseaudio-utils
+
+After install on the desktop, npm run dev stop working because incorrect node and npm were used windows is used.
+
+the fix was to 
+delete global node of WSL2:
+
+sudo apt remove nodejs
+
+
+and remove the path to npm windows
+export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v "/mnt/c/Program Files/nodejs" | paste -sd:)
+export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v "/mnt/c/Users/gtd19/AppData/Roaming/npm" | paste -sd:)
+export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v "/mnt/c/Program Files/nodejs/npm" | paste -sd:)
+
+
+Move cd cond activate and code . back to this order seem to fix everything
+
+# cd ~/Prorgamming
+cd ~/Programming/AI/TransLai
+code .
+conda activate ~/Programming/AI/TransLai/TransLaiPyEnv
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 

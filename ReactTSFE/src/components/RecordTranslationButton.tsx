@@ -2,13 +2,12 @@ import type React from "react";
 import { useState } from "react";
 import axios from "axios";
 import styles from "./FncButtons.module.css";
-
 type languages = {
   ipt_lang_code: string;
   opt_lang_code: string;
 };
 
-const TranslateButton: React.FC<languages> = ({
+const RecordTranslationButton: React.FC<languages> = ({
   ipt_lang_code,
   opt_lang_code,
 }) => {
@@ -19,7 +18,7 @@ const TranslateButton: React.FC<languages> = ({
       setRunning(true);
       setStatus("Translating ... please wait");
       const response = await axios.post(
-        "http://localhost:8000/translate",
+        "http://localhost:8000/record_translation",
         {
           ipt_lang_code: ipt_lang_code,
           opt_lang_code: opt_lang_code,
@@ -28,10 +27,10 @@ const TranslateButton: React.FC<languages> = ({
           headers: { "Content-Type": "application/json" },
         }
       );
-      setStatus(response.data.message || "Translated");
+      setStatus(response.data.message || "Translation speech is being recorded");
     } catch (err) {
       console.error(err);
-      setStatus("Failed to translate");
+      setStatus("Failed to record translation");
     } finally {
       setRunning(false);
     }
@@ -43,11 +42,11 @@ const TranslateButton: React.FC<languages> = ({
         onClick={translate}
         disabled={running}
       >
-        Record and Translate
+        Record Translation
       </button>
       <p>{status}</p>
     </div>
   );
 };
 
-export default TranslateButton;
+export default RecordTranslationButton;

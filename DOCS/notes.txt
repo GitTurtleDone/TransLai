@@ -325,4 +325,18 @@ pip install torchaudio==2.3.0 to match existing torch=2.3.0
 pip install TTS
 
 # remove wrong pip rm ~/.local/bin/pip
- 
+
+
+After install on the desktop, npm run dev stop working because incorrect node and npm were used windows is used.
+
+the fix was to 
+delete global node of WSL2:
+
+sudo apt remove nodejs
+
+
+and remove the path to npm windows
+export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v "/mnt/c/Program Files/nodejs" | paste -sd:)
+export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v "/mnt/c/Users/gtd19/AppData/Roaming/npm" | paste -sd:)
+
+

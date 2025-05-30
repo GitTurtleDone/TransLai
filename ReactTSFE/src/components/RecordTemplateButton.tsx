@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import languages from "../data/languages.json";
 import styles from "./FncButtons.module.css";
+import StopRecordingTemplateButton from "./StopRecordingTemplateButton";
 
 const RecordTemplateButton: React.FC = () => {
   const [lang, setLang] = useState("en");
@@ -30,7 +31,7 @@ const RecordTemplateButton: React.FC = () => {
   return (
     <div>
       <button className={styles.fncButton} onClick={record} disabled={running}>
-        {running ? "Recording ..." : "Start Record Template Voice"}
+        {running ? "Recording ..." : "Start to Record Template Voice"}
       </button>
       <select
         style={{ marginLeft: "2rem" }}
@@ -45,6 +46,7 @@ const RecordTemplateButton: React.FC = () => {
         ))}
         ;
       </select>
+      
       <p> {status} </p>
     </div>
   );

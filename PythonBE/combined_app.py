@@ -13,6 +13,8 @@ from underthesea import sent_tokenize
 # from unidecode import unidecode
 from IPython.display import clear_output
 from fastapi import FastAPI, Request
+from fastapi.responses import FileResponse, JSONResponse
+import signal
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware 
 
@@ -21,6 +23,7 @@ from fastapi.middleware.cors import CORSMiddleware
 ipt_lang = 'en'
 opt_lang = 'vi'
 process_folder = 'ProcessFiles' # the folder where processing files are stored
+ffmpeg_process = None
 #-------------------------------------
 # clean process folder
 def clean_process_folder():
@@ -39,14 +42,13 @@ ipt_audio_file_path = os.path.join(process_folder, "ipt.wav")
 opt_audio_file_path = os.path.join(process_folder, "opt.wav")
 
 
-def record_audio(opt_audio_path):
-    subprocess.run([
-    "ffmpeg",
-    "-f", "pulse",
-    "-i", "default",
-    opt_audio_path
-    ], check=True)
+
 #--------------------------------------
+
+
+
+    
+
 
 
 #--------------------------------------
@@ -355,10 +357,26 @@ def update_languages(ipt, opt):
         # reset template voice
         reference_audio = "PythonBE/sample_voice_" + opt_lang+ ".wav" 
         
-
-
-
-
+def record_audio(opt_audio_path):
+    global ffmpeg_process
+    ffmpeg_process = subprocess.Popen([
+    "ffmpeg",
+    "-f", "pulse",
+    "-i", "default",
+    opt_audio_path
+    ], stdin=subprocess.PIPE)
+    return {"status": "Recording started"}
+def stop_recording():
+    global ffmpeg_process
+    if ffmpeg_process and ffmpeg_process.stdin:
+        # ffmpeg_process.send_signal(signal.SIGTERM)
+        ffmpeg_process.stdin.write(b'q')
+        ffmpeg_process.stdin.flush()
+        ffmpeg_process.wait()
+        ffmpeg_process = None
+    else:
+        return JSONResponse(content={'error': 'No recording in progress'}, status_code=400)
+    
 @app.post('/record_template')
 async def record_template(req: RecordTemplate):
     try:
@@ -366,28 +384,67 @@ async def record_template(req: RecordTemplate):
         if os.path.exists(opt_audio_path):
             os.remove(opt_audio_path)
         record_audio(opt_audio_path)
-        return {"message":f"Template voice saved at {opt_audio_path}"}
+        return {"message":f"Template voice is being recorded and saved at {opt_audio_path}"}
     except subprocess.CalledProcessError:
         return {"message": "Recording failed"}, 500
-
-@app.post('/translate')
+    
+@app.post('/stop_recording_template')
+async def stop_recording_template():
+    try:
+        stop_recording()
+    except subprocess.CalledProcessError:
+        return {'message': 'Stopping recording failed'}, 500
+    
+@app.post('/record_translation')
 async def translate(req: Translate):
-    # global ipt_lang
-    # global opt_lang
-    # global opt_audio_file_path
     global ipt_audio_file_path
     update_languages(req.ipt_lang_code, req.opt_lang_code)
-    # print(whisper_command)
     try: 
         clean_process_folder()
         record_audio(ipt_audio_file_path)
+        # transcribe_input_audio()
+        # translate_text()
+        # text_to_speech()
+        return {'message': f"Translation speech is being recorded and saved at {ipt_audio_file_path}"}
+    except subprocess.CalledProcessError:
+        return {'message': 'Translating failed'}, 500
+    
+@app.post('/stop_n_translate')
+async def stop_n_translate():
+    global ipt_txt_file_path
+    global ipt_audio_file_path
+    global opt_txt_file_path
+    global opt_audio_file_path
+    try:
+        stop_recording()
         transcribe_input_audio()
         translate_text()
         text_to_speech()
-        return {'message': 'Translated'}
+        result = {
+            'message': 'Translated',
+            'ipt_txt': open(ipt_txt_file_path).read(),
+            'opt_txt': open(opt_txt_file_path).read(),
+        }
+        return {
+            **result,
+            'ipt_audio': ipt_audio_file_path,
+            'opt_audio': opt_audio_file_path
+        }
     except subprocess.CalledProcessError:
-        return {'message': 'Translating failed'}, 500
-""""""
+        return {'message': 'Translating failed'}
+
+"""
+
+@app.post('/stop_n_translate')
+async def stop_n_translate():
+    try:
+
+
+
+    except subprocess.CalledProcessError:
+        return {'message': 'Stop and Translate failed'}, 500
+"""
+
 # # @markdown Chọn ngôn ngữ:
 # language = "Tiếng Việt" # @param ["Tiếng Việt", "Tiếng Anh","Tiếng Tây Ban Nha", "Tiếng Pháp","Tiếng Đức","Tiếng Ý", "Tiếng Bồ Đào Nha", "Tiếng Ba Lan", "Tiếng Thổ Nhĩ Kỳ", "Tiếng Nga", "Tiếng Hà Lan", "Tiếng Séc", "Tiếng Ả Rập", "Tiếng Trung (giản thể)", "Tiếng Nhật", "Tiếng Hungary", "Tiếng Hàn", "Tiếng Hindi"]
 # @markdown Văn bản để đọc. Độ dài tối thiểu mỗi câu nên từ 10 từ để đặt kết quả tốt nhất.
