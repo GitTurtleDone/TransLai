@@ -1,0 +1,126 @@
+git clone git@github.com:GitTurtleDone/TransLai.git
+cd AI/TransLai
+git checkout -b combined-app remotes/origin/combined-app
+update conda
+conda create --prefix ~/Programming/AI/TransLai/TransLaiPyEnv python=3.10.16 ipykernel
+conda activate ~/Programming/AI/TransLai/TransLaiPyEnv
+# check that python and pip are correct
+which python
+-> ~/Programming/AI/TransLai/TransLaiPyEnv/bin/python
+which pip
+-> ~/Programming/AI/TransLai/TransLaiPyEnv/bin/pip
+python --version
+-> Python 3.10.16
+pip --version
+-> pip 25.1.1
+
+[submodule "whisper.cpp"]
+	path = whisper.cpp
+	url = https://github.com/ggml-org/whisper.cpp.git
+[submodule "TTS"]
+	path = TTS
+	url = https://github.com/thinhlpg/TTS.git
+	branch = add-vietnamese-xtts
+
+# add whisper.cpp
+git submodule add https://github.com/ggml-org/whisper.cpp.git
+cd whisper cpp
+manual copy ggml-base/tiny(.en).bin models in whisper.cpp/models
+# install cmake
+sudo apt-get update
+sudo apt install cmake
+# install c++ compiler
+sudo apt update
+sudo apt install build-essential
+
+# build cpp project
+cmake -B build
+cmake --build build --config Release
+
+# (check everything is working) output the transcribed speech to text file and select the language to be english
+./build/bin/whisper-cli -m models/ggml-base.bin -f samples/jfk.mp3 -otxt -l en
+
+# install MarianMT
+
+pip install transformers torch
+
+pip install sentencepiece
+
+pip install sacremoses #(optional for better translation)
+
+# maybe no need -> change from transformers import MarianMTModel, MarianTokenizer to from transformer.models.marian import ...
+
+# install vixtts
+git submodule add -b add-vietnamese-xtts https://github.com/thinhlpg/TTS.git
+
+# install tts from add-vietnamese-xtts
+pip install -e ./TTS
+
+pip uninstall tensorflow # tensorflow was installed by wrong pip so it was removed after that from transformers import MarianMTModel, MarianTokenizer works
+
+add vixtts-demo to .gitignores
+
+Manually copy model.pth vocab.json and config.json in vixtts-deom/model from the laptop to the TransLai/vixtts-demo/model of the desktop
+
+
+Maybe also need
+pip install -q vinorm==2.0.7
+pip install -q cutlet
+pip install -q unidic==1.1.0
+pip install -q underthesea
+pip install -q gradio==4.35
+pip install deepfilternet==0.5.6 # this doesn't work
+
+pip install fastapi uvicorn
+pip install torchaudio==2.7.0
+for the packages installed by the wrong pip
+
+
+When going back to laptop computer it didn't work because laptop ran ubuntu 20.04 why desktop runs 22.04.5
+fixed by upgrading wsl2 ubuntu with 
+sudo apt update
+sudo apt upgrade
+sudo do-release-upgrade
+
+
+# cd ~/Prorgamming
+cd ~/Programming/AI/TransLai
+code .
+conda activate ~/Programming/AI/TransLai/TransLaiPyEnv
+
+nano ~/.bash_profile
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# install pulse audio
+sudo apt update
+sudo apt install pulseaudio-utils
+
+After install on the desktop, npm run dev stop working because incorrect node and npm were used windows is used.
+
+the fix was to 
+delete global node of WSL2:
+
+sudo apt remove nodejs
+
+
+and remove the path to npm windows
+export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v "/mnt/c/Program Files/nodejs" | paste -sd:)
+export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v "/mnt/c/Users/gtd19/AppData/Roaming/npm" | paste -sd:)
+export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v "/mnt/c/Program Files/nodejs/npm" | paste -sd:)
+
+
+Move cd cond activate and code . back to this order seem to fix everything
+
+# cd ~/Prorgamming
+cd ~/Programming/AI/TransLai
+code .
+conda activate ~/Programming/AI/TransLai/TransLaiPyEnv
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+

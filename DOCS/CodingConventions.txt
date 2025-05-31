@@ -1,0 +1,22 @@
+Python
+✅ Recommended Python Naming Conventions (PEP 8)
+Type	Convention	Example
+Variables	snake_case	user_name, total_sum
+Functions	snake_case	calculate_total()
+Classes	PascalCase	MyClass, DataLoader
+Constants	UPPER_CASE	MAX_RETRIES, PI
+Modules/Files	snake_case.py	data_loader.py
+Folder PascalCase ProcessFile TransLaiPyEnv
+Packages	snake_case	my_package
+Private Members	_underscore	_internal_method
+Special Methods	__dunder__	__init__, __str__
+
+
+Javascript
+Item	Convention	Example
+Variables/functions	camelCase	userName, getData
+Constants	UPPER_SNAKE_CASE	MAX_COUNT
+Components	PascalCase	UserCard
+Files	kebab-case / PascalCase	user-card.js / UserCard.tsx
+State vars	useState pattern	[isOpen, setIsOpen]
+CSS Classes	kebab-case or BEM	.menu-bar / .btn__icon--small
