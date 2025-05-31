@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Mic, AudioLines } from "lucide-react"; // optional: use any icon lib
-
+import PlayAudio from "./PlayAudio";
 type Props = {
   label: string;
   language: string;
@@ -54,8 +54,12 @@ export default function TranslatorBox({
       <div
         style={{ display: "flex", alignItems: "center", marginTop: "0.5rem" }}
       >
-        <Mic size={24} />
-        <AudioLines size={24} style={{ marginLeft: "1rem" }} />
+        <PlayAudio
+          audio_type={label == "Input" ? "ipt" : "opt"}
+          lang_code={language}
+          />
+        {/* <Mic size={24} />
+        <AudioLines size={24} style={{ marginLeft: "1rem" }} /> */}
       </div>
     </div>
   );

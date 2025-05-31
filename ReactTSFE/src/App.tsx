@@ -1,25 +1,15 @@
 import { useState } from "react";
 import TranslatorBox from "./components/TranslatorBox";
 import languages from "./data/languages.json";
-import RecordTemplateButton from "./components/RecordTemplateButton";
-import TranslateButton from "./components/RecordTranslationButton";
+import RecordTemplateButton from "./components/RecordTemplate";
+import RecordTranslationButton from "./components/RecordTranslationButton";
 import StopNTranslateButton from "./components/StopNTranslateButton";
 import StopRecordingTemplateButton from "./components/StopRecordingTemplateButton";
-// import { FileX } from "lucide-react";
-
-// const
-// // languages = [
-// //   { code: "en", name: "English" },
-// //   { code: "vi", name: "Vietnamese" },
-// //   { code: "fr", name: "French" },
-// //   { code: "es", name: "Spanish" },
-// // ];
-
+import styles from "./components/FncButtons.module.css";
 function App() {
   const [inputLang, setInputLang] = useState("en");
   const [inputText, setInputText] = useState("");
   const [outputLang, setOutputLang] = useState("vi");
-
   const [outputText, setOutputText] = useState("");
 
   return (
@@ -33,9 +23,8 @@ function App() {
         padding: "2rem",
       }}
     >
-      <h1>Portable Translator</h1>
+      <h1>Off-line Translator</h1>
       <RecordTemplateButton />
-      <StopRecordingTemplateButton />
       <div
         style={{
           display: "flex",
@@ -45,9 +34,6 @@ function App() {
           justifyContent: "left",
           marginBottom: "2rem",
           marginTop: "1rem",
-          // alignItems: "left",
-
-          // border: "1px solid gray", // visual aid
         }}
       >
         <TranslatorBox
@@ -67,8 +53,16 @@ function App() {
           languages={languages}
         />
       </div>
-      <TranslateButton ipt_lang_code={inputLang} opt_lang_code={outputLang} />
-      <StopNTranslateButton/>
+      <div className={styles.container}>
+        <RecordTranslationButton
+          ipt_lang_code={inputLang}
+          opt_lang_code={outputLang}
+        />
+        <StopNTranslateButton
+          setInputText={setInputText}
+          setOutputText={setOutputText}
+        />
+      </div>
     </div>
   );
 }

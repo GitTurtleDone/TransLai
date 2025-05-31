@@ -3,7 +3,11 @@ import { useState } from "react";
 import axios from "axios";
 import styles from "./FncButtons.module.css";
 
-const StopNTranslateButton: React.FC = () => {
+interface Props {
+  setInputText: (text: string) => void;
+  setOutputText: (text: string) => void;
+}
+const StopNTranslateButton: React.FC = ({setInputText, setOutputText}: Props) => {
   const [status, setStatus] = useState("");
   const [running, setRunning] = useState(false);
   const stopNTranslate = async () => {
@@ -17,6 +21,8 @@ const StopNTranslateButton: React.FC = () => {
         }
       );
       console.log(response.data.message || "Translated.");
+      setInputText(response.data.ipt_txt);
+      setOutputText(response.data.opt_txt);
     } catch (err) {
       setStatus("Failed to Stop and TransLate");
       console.error(err);

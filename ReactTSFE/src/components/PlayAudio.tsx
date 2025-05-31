@@ -2,34 +2,33 @@ import type React from "react";
 import { useState } from "react";
 import axios from "axios";
 import styles from "./FncButtons.module.css";
-type languages = {
-  ipt_lang_code: string;
-  opt_lang_code: string;
+
+type PlayAudioType = {
+  audio_type: string;
+  lang_code: string;
 };
-const RecordTranslationButton: React.FC<languages> = ({
-  ipt_lang_code,
-  opt_lang_code,
-}) => {
+
+const PlayAudio: React.FC<PlayAudioType> = ({ audio_type, lang_code }) => {
   const [running, setRunning] = useState(false);
   const [status, setStatus] = useState("");
-  const recordTranslation = async () => {
+  const playAudio = async () => {
     try {
       setRunning(true);
-      setStatus("Recording for translation ...");
+      setStatus("Playing audio ...");
       const response = await axios.post(
-        "http://localhost:8000/record_translation",
+        "http://localhost:8000/play_audio",
         {
-          ipt_lang_code: ipt_lang_code,
-          opt_lang_code: opt_lang_code,
+          audio_type: audio_type,
+          lang_code: lang_code,
         },
         {
           headers: { "Content-Type": "application/json" },
         }
       );
-      setStatus(response.data.message || "Translation speech is being recorded");
+      setStatus(response.data.message || "Audio played");
     } catch (err) {
       console.error(err);
-      setStatus("Failed to record translation");
+      setStatus("Failed to play audio");
     } finally {
       setRunning(false);
     }
@@ -38,14 +37,14 @@ const RecordTranslationButton: React.FC<languages> = ({
     <div>
       <button
         className={styles.fncButton}
-        onClick={recordTranslation}
+        onClick={playAudio}
         disabled={running}
       >
-        Record Translation
+        ▶
       </button>
       <p>{status}</p>
     </div>
   );
 };
 
-export default RecordTranslationButton;
+export default PlayAudio;

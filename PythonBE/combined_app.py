@@ -27,9 +27,7 @@ ffmpeg_process = None
 #-------------------------------------
 # clean process folder
 def clean_process_folder():
-
     global process_folder
-    
     for filename in os.listdir(process_folder):
         file_path = os.path.join(process_folder, filename)
         if os.path.isfile(file_path):
@@ -309,11 +307,10 @@ def text_to_speech():
                 normalize_text=normalize_text,
                 verbose=verbose,
                 output_chunks=output_chunks,)
-
-    subprocess.run(["ffplay", "-nodisp", "-autoexit", audio_file])
+    
+    play_audio(audio_file)
+    # subprocess.run(["ffplay", "-nodisp", "-autoexit", audio_file])
 #-----------------------------------
-
-
 
 app = FastAPI()
 class RecordTemplate(BaseModel):
@@ -321,6 +318,10 @@ class RecordTemplate(BaseModel):
 class Translate(BaseModel):
     ipt_lang_code: str
     opt_lang_code: str
+class PlayAudioType(BaseModel):
+    # the audio type would be either 'template', 'ipt', or 'opt'
+    audio_type: str
+    lang_code: str
 allowed_origins = [
     "http://127.0.0.1:5173",
     "http://localhost:5173",
@@ -376,7 +377,9 @@ def stop_recording():
         ffmpeg_process = None
     else:
         return JSONResponse(content={'error': 'No recording in progress'}, status_code=400)
-    
+def play_audio(audio_path):
+    subprocess.run(["ffplay", "-nodisp", "-autoexit", audio_path])
+
 @app.post('/record_template')
 async def record_template(req: RecordTemplate):
     try:
@@ -384,7 +387,8 @@ async def record_template(req: RecordTemplate):
         if os.path.exists(opt_audio_path):
             os.remove(opt_audio_path)
         record_audio(opt_audio_path)
-        return {"message":f"Template voice is being recorded and saved at {opt_audio_path}"}
+        return {"message":f"Template voice is being recorded and saved at \
+                {os.path.basename(opt_audio_path)}"}
     except subprocess.CalledProcessError:
         return {"message": "Recording failed"}, 500
     
@@ -432,6 +436,20 @@ async def stop_n_translate():
         }
     except subprocess.CalledProcessError:
         return {'message': 'Translating failed'}
+@app.post('/play_audio')
+async def play_audio_be(req: PlayAudioType):
+    try:
+        audio_file_path = ""
+        if req.audio_type == 'template':
+            audio_file_path = f'PythonBE/sample_voice_{req.lang_code}.wav'
+        elif req.audio_type == 'ipt':
+            audio_file_path = ipt_audio_file_path
+        elif req.audio_type == 'opt':
+            audio_file_path = opt_audio_file_path
+        play_audio(audio_file_path)
+        return {"message": f"{os.path.basename(audio_file_path)} played"}
+    except subprocess.CalledProcessError:
+        return {'message': 'Audio file does not exist'} 
 
 """
 
