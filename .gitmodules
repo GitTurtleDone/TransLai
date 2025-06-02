@@ -6,3 +6,6 @@
 	path = TTS
 	url = https://github.com/thinhlpg/TTS.git
 	branch = add-vietnamese-xtts
+[submodule "underthesea"]
+	path = underthesea
+	url = https://github.com/undertheseanlp/underthesea.git

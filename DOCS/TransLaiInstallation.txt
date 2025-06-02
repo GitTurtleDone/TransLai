@@ -25,6 +25,8 @@ pip --version
 # add whisper.cpp
 git submodule add https://github.com/ggml-org/whisper.cpp.git
 cd whisper cpp
+
+(update 25/06/02) after cloning the project to Pi 5, git submodule update --init --recursive
 manual copy ggml-base/tiny(.en).bin models in whisper.cpp/models
 # install cmake
 sudo apt-get update
@@ -39,6 +41,10 @@ cmake --build build --config Release
 
 # (check everything is working) output the transcribed speech to text file and select the language to be english
 ./build/bin/whisper-cli -m models/ggml-base.bin -f samples/jfk.mp3 -otxt -l en
+
+# install ffmpeg to record sound
+sudo apt update
+sudo apt install ffmpeg
 
 # install MarianMT
 
@@ -67,13 +73,51 @@ Maybe also need
 pip install -q vinorm==2.0.7
 pip install -q cutlet
 pip install -q unidic==1.1.0
-pip install -q underthesea
-pip install -q gradio==4.35
+pip install -q underthesea (couldn't install in Pi 5, because Pi 5 used ARM-based architure, on common platforms x86/64 linux, MacOS, and Windows, many python packages provide wheel files, these wheels have compiled Rust extention, 
+-> no build process needed, 
+ARM64 of pi doesn't have wheel -> pyproject.tom needed
+need to go 
+1) curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+2) source "$HOME/.cargo/env"
+3) pip install maturin==0.14.1 (the updated version 1.8.xx didn't work need to downgrade to 0.14.1)
+4) git clone https://github.com/undertheseanlp/underthesea.git
+5) cd underthesea/extensions/underthesea_core
+6) change the file pyproject.toml to:
+[build-system]
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "underthesea_core"
+version = "1.0.4"
+description = "Underthesea Core"
+authors = [
+    { name = "Giang T Dang", email = "giang2110@gmail.com" }
+]
+requires-python = ">=3.7,<3.12"
+readme = "README.md"
+#license = { file = "LICENSE" }
+7) under underthesea_core run:
+maturin develop --release
+8) go back to underthesea run:
+pip install -e . --config-settings editable_mode=compat (without compatible mode also didn't work)
+
+
+
+then after may be update pip wheel )
+pip install -q gradio==4.35 (not installed in  Pi 5)
 pip install deepfilternet==0.5.6 # this doesn't work
 
 pip install fastapi uvicorn
 pip install torchaudio==2.7.0
 for the packages installed by the wrong pip
+
+sudo apt install -y nodejs
+cd ReactTSFE
+npm install 
+npm run dev
+
+pip install ipython
 
 
 When going back to laptop computer it didn't work because laptop ran ubuntu 20.04 why desktop runs 22.04.5
