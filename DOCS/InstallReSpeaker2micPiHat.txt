@@ -24,6 +24,10 @@ alsamixer
 
 F6 -> select the correct voice card increase the sound correspondingly.
 
+Connect the JST 2.0 speaker out port of the ReSpecaker to a passive speaker, working OK. 
+The quality of the sound not as good, probably because of the low quality of the passive speaker 
+purchased from AliExpress/Temu
+
 
 
 
