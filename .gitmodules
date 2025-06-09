@@ -9,3 +9,7 @@
 [submodule "underthesea"]
 	path = underthesea
 	url = https://github.com/undertheseanlp/underthesea.git
+[submodule "seeed-voicecard"]
+	path = seeed-voicecard
+	url = https://github.com/HinTak/seeed-voicecard.git
+	branch = v6.12
