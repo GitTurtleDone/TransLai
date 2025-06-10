@@ -167,4 +167,35 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+250610
+sudo apt update
+sudo apt install git
+git --version
+mkdir Programming
+cd Programming
+mkdir AI
+
+cd AI
+git clone to clone TransLai
+-> git add modules to install seeed-voicecard (see Installation of seed studio reSpeaker 2-mic pi hat
+Installation on Pi 4
+
+cd ~
+wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh
+bash Miniforge3-Linux-aarch64.sh
+yes
+
+Restart the terminal
+cd Programming/AI/TransLai
+conda create --prefix ~/Programming/AI/TransLai/TransLaiPyEnv python=3.10.16 ipykernel
+conda activate /home/giang/Programming/AI/TransLai/TransLaiPyEnv
+
+# update submodules
+git submodule update --init --recursive
+failed at Username for 'https://huggingface.co': ^C when trying to update underthesea.
+(may or may not needed) git submodule init whisper.cpp
+git submodule update --init whisper.cpp
+
+Manually copy the models ggml-base/tiny(.en).bin models in whisper.cpp/models
+
 

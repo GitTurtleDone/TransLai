@@ -37,7 +37,7 @@ sudo apt update
 sudo apt install ffmpeg
 
 # record voice without duration setting (press 'q' when stop)
-ffmpeg -f alsa -i default ./samples/translai.wav
+ffmpeg -f alsa -i default ../Experiments/whisper.cpp/samples/TestPi4.wav
 
 # convert to .mp3
 ffmpeg -i ./samples/translai.wav ./samples/translai.mp3

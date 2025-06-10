@@ -28,6 +28,9 @@ Connect the JST 2.0 speaker out port of the ReSpecaker to a passive speaker, wor
 The quality of the sound not as good, probably because of the low quality of the passive speaker 
 purchased from AliExpress/Temu
 
+bash
+raspi-config -> Advanced Options -> Audio Config audio option change from PipeWire to PulseAudio
+
 
 
 
