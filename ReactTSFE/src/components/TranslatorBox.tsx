@@ -30,7 +30,7 @@ export default function TranslatorBox({
       <label>{label}</label>
 
       <div>
-        <select value={language} onChange={(e) => setLanguage(e.target.value)}>
+        <select value={language} onChange={(e) => {setLanguage(e.target.value); setText("")}}>
           {languages.map((lang) => (
             <option key={lang.code} value={lang.code}>
               {lang.name}
