@@ -37,32 +37,16 @@ sudo apt update
 sudo apt install ffmpeg
 
 # record voice without duration setting (press 'q' when stop)
-ffmpeg -f alsa -i default ./samples/translai.wav
-
-# convert to .mp3
-ffmpeg -i ./samples/translai.wav ./samples/translai.mp3
-
-# using tiny model took about 11-13 s
-sh ./models/download-ggml-model.sh tiny
-/build/bin/whisper-cli -m models/ggml-tiny.bin -f samples/RogerPenrose.wav -otxt -l en
-
-# using tiny.en model took about the same time
-
-# transcribe vietnamese using tiny model took ~13 s
-./build/bin/whisper-cli -m models/ggml-tiny.bin -f samples/EmDiHocSom_vi.wav -otxt -l vi
-
-# transcribe vietnamese using base model took ~26 s
-./build/bin/whisper-cli -m models/ggml-base.bin -f samples/EmDiHocSom_vi.wav -otxt -l vi
+ffmpeg -f alsa -i default ../Experiments/whisper.cpp/samples/TestPi4.wav
 
 
-
-
-
-250429
 
 # install MarianMT
+pip install update
 
-pip install transformers torch
+python -m pip install --upgrade pip
+
+pip install transformers torch (no errors after update, upgrade)
 
 pip install sentencepiece
 

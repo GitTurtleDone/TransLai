@@ -1,0 +1,40 @@
+On Pi 4
+Remove wrong version of seeed-voicecard
+cd seeed-voicecard
+sudo ./uninstall.sh
+sudo reboot
+
+cd Programming/AI/TransLai
+
+uname -r to check the version of the kernel currently v6.12 -> need to install voicecard v6.12
+
+git submodule add -b v6.12 https://github.com/HinTak/seeed-voicecard.git
+
+cd seeed-voicecard
+sudo ./install.sh
+sudo reboot
+
+aplay -l -> show the voice card is card 4
+
+arecord -D "plughw:4,0" -f S16_LE -r 16000 -d 5 -t test1.wav
+
+aplay -D "plughw:4,0" test1.wav
+
+alsamixer
+
+F6 -> select the correct voice card increase the sound correspondingly.
+
+Connect the JST 2.0 speaker out port of the ReSpecaker to a passive speaker, working OK. 
+The quality of the sound not as good, probably because of the low quality of the passive speaker 
+purchased from AliExpress/Temu
+
+bash
+raspi-config -> Advanced Options -> Audio Config audio option change from PipeWire to PulseAudio
+
+
+
+
+
+
+
+
