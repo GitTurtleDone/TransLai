@@ -533,3 +533,74 @@ wrapt                   1.17.2
 yarl                    1.20.1
 zipp                    3.23.0
 
+
+
+250619
+
+#---Git and authentication
+sudo apt update && sudo apt full-upgrade
+
+sudo apt autoremove
+
+sudo apt install git
+
+git --version -> git version 2.39.5
+
+sudo apt update && sudo apt install -y
+
+ls -al ~/.ssh -> check none exists
+
+ssh-keygen -t ed25519 -C "giang2110@gmail.com"
+
+eval "$(ssh-agent -s)"
+
+ssh-add ~/.ssh/id_ed25519
+
+cat ~/.ssh/id_ed25519.pub -> Copy the result -> Paste in the New SSH Key in github
+
+ssh -T git@github.com -> check for successfull authentication
+
+git clone git@github.com:GitTurtleDone/TransLai.git
+
+#--------VS Code------------------
+sudo apt update && sudo apt upgrade -y
+
+sudo apt install -y wget gpg
+
+sudo apt install -y wget gpg
+
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
+rm packages.microsoft.gpg
+
+echo "deb [arch=arm64] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
+
+sudo apt update
+sudo apt install code
+
+#-----------Conda---------------------------
+
+cd ~
+wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh
+bash Miniforge3-Linux-aarch64.sh
+yes
+
+#--------------Create the TransLaiPyEnv-----------------------------
+Restart the terminal
+cd Programming/AI/TransLai
+conda create --prefix ~/Programming/AI/TransLai/TransLaiPyEnv python=3.10.16 ipykernel
+conda activate /home/giang/Programming/AI/TransLai/TransLaiPyEnv
+
+change the ~/.bashrc if needed.
+
+#-------------------------------Update submodules ---------------------------------
+
+# update submodules
+git submodule update --init --recursive
+failed at Username for 'https://huggingface.co': ^C when trying to update underthesea.
+(may or may not needed) git submodule init whisper.cpp
+git submodule update --init whisper.cpp
+Manually copy the models ggml-base/tiny(.en).bin models in whisper.cpp/models
+
+
+
