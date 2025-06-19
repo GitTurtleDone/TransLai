@@ -2,10 +2,14 @@
 [submodule "whisper.cpp"]
 	path = whisper.cpp
 	url = https://github.com/ggml-org/whisper.cpp.git
+[submodule "underthesea"]
+	path = underthesea
+	url = https://github.com/undertheseanlp/underthesea.git
+[submodule "seeed-voicecard"]
+	path = seeed-voicecard
+	url = https://github.com/HinTak/seeed-voicecard.git
+	branch = v6.12
 [submodule "TTS"]
 	path = TTS
 	url = https://github.com/thinhlpg/TTS.git
 	branch = add-vietnamese-xtts
-[submodule "underthesea"]
-	path = underthesea
-	url = https://github.com/undertheseanlp/underthesea.git

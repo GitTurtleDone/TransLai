@@ -235,12 +235,12 @@ def run_tts(XTTS_MODEL, lang, tts_text, speaker_audio_file,
         sound_norm_refs=XTTS_MODEL.config.sound_norm_refs,
     )
 
-    if normalize_text and lang == "vi":
-        # Bug on google colab
-        try:
-            tts_text = normalize_vietnamese_text(tts_text)
-        except:
-            cry_and_quit()
+    # if normalize_text and lang == "vi":
+    #     # Bug on google colab
+    #     try:
+    #         tts_text = normalize_vietnamese_text(tts_text)
+    #     except:
+    #         cry_and_quit()
 
     if lang in ["ja", "zh-cn"]:
         tts_texts = tts_text.split("。")
