@@ -5,3 +5,6 @@
 	path = TTS
 	url = https://github.com/thinhlpg/TTS.git
 	branch = add-vietnamese-xtts
+[submodule "x120x"]
+	path = x120x
+	url = https://github.com/suptronics/x120x.git

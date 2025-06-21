@@ -1,0 +1,15 @@
+When first opened with sudo rpi-eeprom-config -e
+[all]
+BOOT_UART=1
+POWER_OFF_ON_HALT=0
+BOOT_ORDER=0xf41
+
+Modified
+[all]
+BOOT_UART=1
+POWER_OFF_ON_HALT=0
+BOOT_ORDER=0xf41
+PSU_MAX_CURRENT=5000
+
+file to write out is /tmp/tmpu62dncz5/boot.conf
+link to manual: https://wiki.dfrobot.com/Raspberry_Pi_5_UPS_SKU_FIT0992_
