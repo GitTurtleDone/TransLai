@@ -893,3 +893,76 @@ pip freeze > requirementsPi5.txt
 
 
 
+250622
+full screen on Pi5:
+
+Created ~/Programming/AI/TransLai/StartTransLai.sh
+#!/bin/bash
+# Navigate to the backend directory and run it
+eval "$(/home/giang/miniforge3/bin/conda shell.bash hook)"
+conda activate /home/giang/Programming/AI/TransLai/TransLaiPyEnv
+cd ~/Programming/AI/TransLai/
+nohup uvicorn PythonBE.combined_app:app > backend.log 2>&1 &
+
+# Navigate to the frontend directory and run it
+eval "$(/home/giang/miniforge3/bin/conda shell.bash hook)"
+conda activate /home/giang/Programming/AI/TransLai/TransLaiPyEnv
+export NVM_DIR="$HOME/.nvm"
+source "$NVM_DIR/nvm.sh"
+nvm use node
+cd ~/Programming/AI/TransLai/ReactTSFE
+export PATH=$PATH:/usr/bin:/usr/local/bin
+nohup npm run dev > frontend.log 2>&1 &
+
+# Wait a bit and open the browser to the frontend
+sleep 20
+# Hide mouse cursor after 0.1s of inactivity
+unclutter -idle 0.1 -root &
+# Launch browser in fullscreen
+firefox --kiosk http://localhost:5173
+#xdg-open http://localhost:5173
+
+sudo chmod +x StartTransLai.sh
+
+mkdir -p ~/.config/autostart
+nano ~/.config/autostart/TransLai.desktop
+
+# added the content:
+[Desktop Entry]
+Type=Application
+Name=TransLai
+Exec=/home/giang/Programming/AI/TransLai/StartTransLai.sh
+#the path must be full absolute explicit path
+X-GNOME-Autostart-enabled=true
+
+250625
+
+Went back to office desktop computer to office desktop computer to develop
+new UI
+
+
+uvicorn didn't work, Py enviroment not working properly.
+Hack to reuse the TransLaiPyEnv folder.
+mv /home/giang/Programming/AI/TransLai/TransLaiPyEnv /home/giang/Programming/AI/TransLai/TransLaiPyEnv_old
+conda create --prefix /home/giang/Programming/AI/TransLai/TransLaiPyEnv python=3.10
+
+cp -r ~/Programming/AI/TransLai/TransLaiPyEnv_old/lib/python3.10/site-packages/*       ~/Programming/AI/TransLai/TransLaiPyEnv/lib/python3.10/site-packages/
+
+conda activate /home/giang/Programming/AI/TransLai/TransLaiPyEnv
+which python
+python --version
+which pip
+pip list
+
+which python
+pip show uvicorn
+
+pip install --force-reinstall uvicorn
+ls /home/giang/Programming/AI/TransLai/TransLaiPyEnv/bin/uvicorn
+
+which uvicorn
+uvicorn --version
+
+
+
+
