@@ -38,25 +38,23 @@ const RecordTemplate: React.FC = () => {
             onClick={record}
             disabled={running}
           >
-            Start to Record Template Voice
+            Record Template Voice
           </button>
           <div className={styles.item}>
             <select
-            style={{ marginLeft: "2rem" }}
-            value={lang}
-            onChange={(e) => setLang(e.target.value)}
-            disabled={running}
-          >
-            {languages.map((language) => (
-              <option key={language.code} value={language.code}>
-                {language.name}
-              </option>
-            ))}
-            ;
-          </select>
-
+              style={{ marginLeft: "2rem" }}
+              value={lang}
+              onChange={(e) => setLang(e.target.value)}
+              disabled={running}
+            >
+              {languages.map((language) => (
+                <option key={language.code} value={language.code}>
+                  {language.name}
+                </option>
+              ))}
+              ;
+            </select>
           </div>
-          
         </div>
         <p>{status}</p>
         {/* <p style={{ maxWidth: "20rem", wordBreak: "break-word" }}>{status}</p> */}
