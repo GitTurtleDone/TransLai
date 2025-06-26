@@ -22,45 +22,63 @@ export default function TranslatorBox({
     <div
       style={{
         flex: 1,
-        minWidth: "300px",
-        maxWidth: "600px",
-        // boxSizing: "border-box",
+        minWidth: "0",
+        height: "100%",
+        resize: "none",
+        padding: "1rem",
+        fontSize: "1rem",
+        // /maxWidth: "600px",
+        boxSizing: "border-box",
       }}
     >
-      <label>{label}</label>
-
-      <div>
-        <select value={language} onChange={(e) => {setLanguage(e.target.value); setText("")}}>
+      <div
+        style={{
+          display: "flex",
+          flex: "1",
+          alignItems: "baseline",
+          marginTop: "0.5rem",
+          width: "100%",
+          gap: "1rem",
+          resize: "vertical",
+        }}
+      >
+        <label>{label}</label>
+        <select
+          value={language}
+          onChange={(e) => {
+            setLanguage(e.target.value);
+            setText("");
+          }}
+        >
           {languages.map((lang) => (
             <option key={lang.code} value={lang.code}>
               {lang.name}
             </option>
           ))}
         </select>
+        <PlayAudio
+          audio_type={label == "Input" ? "ipt" : "opt"}
+          lang_code={language}
+        />
       </div>
+      {/* <Mic size={24} />
+        <AudioLines size={24} style={{ marginLeft: "1rem" }} /> */}
+      {/* <div
+          style={{ display: "flex", alignItems: "center", marginTop: "0.5rem" }}
+        ></div> */}
 
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
         rows={10}
         style={{
+          flex: "1",
           minHeight: "100px",
           width: "100%",
           marginTop: "0.5rem",
           resize: "vertical", // prevent horizontal drag
         }}
       />
-
-      <div
-        style={{ display: "flex", alignItems: "center", marginTop: "0.5rem" }}
-      >
-        <PlayAudio
-          audio_type={label == "Input" ? "ipt" : "opt"}
-          lang_code={language}
-          />
-        {/* <Mic size={24} />
-        <AudioLines size={24} style={{ marginLeft: "1rem" }} /> */}
-      </div>
     </div>
   );
 }
